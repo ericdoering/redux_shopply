@@ -1,0 +1,33 @@
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, shallowEqual } from "react-redux";
+import CartIcons from "./CartIcons";
+
+function ProductDetails() {
+    const { id } = useParams();
+    const { image_url, name, price, description } = useSelector((store) => ({
+        ...store.products[id],
+    }),
+    shallowEqual);
+
+    return (
+        <div className="row justify-content-center">
+            <div className="col-md-4">
+                <img className="ProductDetails-img card-img-top" src={image_url} alt={name}></img>
+                <div className="card-body">
+                    <div className="d-flex justify-content-between">
+                        <h4>{name}</h4>
+                        <h6>${price}</h6>
+                    </div>
+                    <p className="text-center">{description}</p>
+                    <CartIcons id={id} />
+                </div>
+                    <Link to="/" className="btn btn-block btn-link">
+                        Return to Products
+                    </Link>
+            </div>
+        </div>
+    )
+};
+
+export default ProductDetails;
